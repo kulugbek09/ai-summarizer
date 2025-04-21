@@ -1,20 +1,27 @@
-import Hero from "./components/Hero";
-import Demo from "./components/Demo";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Hero from './components/Hero';
+import YouTube from './components/YouTube';
+import TranscriptPage from './components/TranscriptPage';
 
-import "./App.css";
+import './App.css';
 
 const App = () => {
   return (
-    <main>
-      <div className='main'>
-        <div className='gradient' />
-      </div>
+    <Router>
+      <main>
+        <div className='main'>
+          <div className='gradient' />
+        </div>
 
-      <div className='app'>
-        <Hero />
-        <Demo />
-      </div>
-    </main>
+        <div className='app'>
+          <Routes>
+            <Route path="/" element={<><Hero /><YouTube /></>} />
+            <Route path="/transcript" element={<TranscriptPage />} />
+          </Routes>
+        </div>
+      </main>
+    </Router>
   );
 };
 

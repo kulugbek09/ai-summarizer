@@ -1,10 +1,10 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore } from '@reduxjs/toolkit';
+import youtubeReducer from './youtube';  // This is now correct
 
-import { articleApi } from "./article";
+const store = configureStore({
+  reducer: {
+    youtube: youtubeReducer,  // This uses the default export from youtube.js
+  },
+});
 
-export const store = configureStore({
-    reducer: {
-        [articleApi.reducerPath]: articleApi.reducer,
-    },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(articleApi.middleware)
-})
+export default store;
