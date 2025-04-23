@@ -2,24 +2,28 @@ import React, { useEffect, useState } from 'react';
 
 const TranscriptPage = () => {
   const [transcript, setTranscript] = useState('');
+  const [error, setError] = useState('');
   const [isTranscriptReady, setIsTranscriptReady] = useState(false);
 
   useEffect(() => {
-    // Simulate checking if the transcript feature is ready
     const savedTranscript = localStorage.getItem('transcript');
-    
-    if (savedTranscript) {
+    const savedError = localStorage.getItem('error');
+
+    if (savedError) {
+      setError(savedError);
+      setIsTranscriptReady(false);
+    } else if (savedTranscript) {
       setTranscript(savedTranscript);
-      setIsTranscriptReady(true);  // Set the feature as ready if transcript is found
-    } else {
-      setIsTranscriptReady(false);  // Keep it not ready until we have the feature
+      setIsTranscriptReady(true);
     }
   }, []);
 
   return (
     <section className="mt-16 w-full max-w-xl flex justify-center items-center">
       <div className="flex flex-col gap-4 text-center">
-        {isTranscriptReady ? (
+        {error ? (
+          <p className="text-red-500 text-center">{error}</p>
+        ) : isTranscriptReady ? (
           <>
             <h2 className="text-xl font-bold">Video Transcript</h2>
             <div className="summary_box">
