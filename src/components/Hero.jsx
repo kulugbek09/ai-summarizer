@@ -5,7 +5,7 @@ const Hero = () => {
   return (
     <header className="w-full flex flex-col items-center px-4 sm:px-8">
       <nav className="flex justify-between items-center w-full max-w-7xl mb-10 pt-6">
-        <img src={logo} alt="ytai_logo" className="w-24 sm:w-28 object-contain" />
+        {/* <img src={logo} alt="ytai_logo" className="w-24 sm:w-28 object-contain" /> */}
       </nav>
 
       <h1 className="text-3xl sm:text-5xl font-bold text-center leading-tight mb-4">
