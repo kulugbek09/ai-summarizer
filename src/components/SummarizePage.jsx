@@ -28,7 +28,9 @@ const SummarizePage = () => {
         <section className="mt-16 w-full max-w-xl flex justify-center items-center">
             <div className="flex flex-col gap-4 text-center">
                 {error ? (
-                    <p className="text-red-500 text-center">{error}</p>
+                    // <p className="text-red-500 text-center">{error}</p>
+                    <p className="text-gray-500 text-lg">Coming Soon...</p>
+
                 ) : isSummaryReady ? (
                     <>
                         <h2 className="text-xl font-bold">Summary</h2>
