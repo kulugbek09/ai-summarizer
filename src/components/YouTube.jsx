@@ -19,7 +19,7 @@ const YouTube = () => {
 
       localStorage.setItem('transcript', fetchedTranscript);
       localStorage.setItem('videoUrl', youtubeUrl);
-      localStorage.removeItem('error'); // clear any old errors
+      localStorage.removeItem('error');
     } catch (err) {
       localStorage.setItem('error', err.message || 'Something went wrong.');
     } finally {
@@ -29,7 +29,7 @@ const YouTube = () => {
   };
 
   return (
-    <section className="mt-16 w-full max-w-xl">
+    <section className="mt-16 w-full max-w-xl px-4 sm:px-0">
       <div className="flex flex-col w-full gap-4">
         <div className="relative flex justify-center items-center">
           <input
@@ -38,20 +38,19 @@ const YouTube = () => {
             value={youtubeUrl}
             onChange={(e) => setYoutubeUrl(e.target.value)}
             required
-            className="url_input peer"
+            className="url_input w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 transition"
           />
         </div>
 
-        <div className="mt-6 flex flex-col sm:flex-row gap-4 w-[70%] aip-center mx-auto">
+        <div className="mt-6 flex flex-col sm:flex-row gap-4 w-full">
           <button
             type="button"
             onClick={() => handleButtonClick('transcript')}
-            className="flex-1 px-1 py-3 rounded-xl bg-black text-white font-semibold 
-               hover:bg-gray-800 
-               hover:shadow-xl 
-               focus:outline-none focus:ring-4 focus:ring-gray-500 focus:ring-offset-2 
-               active:scale-95 active:shadow-sm
-               transition-all duration-300 ease-in-out"
+            className="w-full sm:w-1/2 px-4 py-3 rounded-xl bg-black text-white font-semibold 
+              hover:bg-gray-800 hover:shadow-xl 
+              focus:outline-none focus:ring-4 focus:ring-gray-500 focus:ring-offset-2 
+              active:scale-95 active:shadow-sm
+              transition-all duration-300 ease-in-out"
           >
             📄 Get Transcript
           </button>
@@ -59,23 +58,20 @@ const YouTube = () => {
           <button
             type="button"
             onClick={() => handleButtonClick('summarize')}
-            className="flex-1 px-1 py-3 rounded-xl bg-black text-white font-semibold 
-               hover:bg-gray-800 
-               hover:shadow-xl 
-               focus:outline-none focus:ring-4 focus:ring-gray-500 focus:ring-offset-2 
-               active:scale-95 active:shadow-sm
-               transition-all duration-300 ease-in-out"
+            className="w-full sm:w-1/2 px-4 py-3 rounded-xl bg-black text-white font-semibold 
+              hover:bg-gray-800 hover:shadow-xl 
+              focus:outline-none focus:ring-4 focus:ring-gray-500 focus:ring-offset-2 
+              active:scale-95 active:shadow-sm
+              transition-all duration-300 ease-in-out"
           >
             🧠 Summarize
           </button>
         </div>
-
-
       </div>
 
       {isLoading && (
-        <div className="flex justify-center items-center mt-4">
-          <img src={loader} alt="loader" className="w-10 h-10 object-contain" />
+        <div className="flex justify-center items-center mt-6">
+          <img src={loader} alt="loader" className="w-10 h-10 object-contain animate-spin" />
         </div>
       )}
     </section>
