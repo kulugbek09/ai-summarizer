@@ -1,51 +1,48 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import jsPDF from 'jspdf';
 
-const SummarizePage = () => {
-    const [summary, setSummary] = useState('');
-    const [error, setError] = useState('');
-    const [isSummaryReady, setIsSummaryReady] = useState(false);
+const SummarizePage = ({ onClose }) => {
+  const lorem = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ac justo vitae orci tristique luctus. Mauris tempor nisl sed risus hendrerit, vel pharetra lacus sollicitudin. Nunc vitae justo nec nisi sagittis commodo.`;
 
-    useEffect(() => {
-        const savedError = localStorage.getItem('error');
-        const savedTranscript = localStorage.getItem('transcript');
+  const handleDownload = () => {
+    const doc = new jsPDF();
+    doc.text(lorem, 10, 10);
+    doc.save("summary.pdf");
+  };
 
-        if (savedError) {
-            setError(savedError);
-            setIsSummaryReady(false);
-        } else if (savedTranscript) {
-            // Fake summarize for now: truncate or manipulate
-            const fakeSummary = `Summary:\n\n${savedTranscript
-                .split(' ')
-                .slice(0, 50)
-                .join(' ')}...`;
-
-            setSummary(fakeSummary);
-            setIsSummaryReady(true);
-        }
-    }, []);
-
-    return (
-        <section className="mt-16 w-full max-w-xl flex justify-center items-center">
-            <div className="flex flex-col gap-4 text-center">
-                {error ? (
-                    // <p className="text-red-500 text-center">{error}</p>
-                    <p className="text-gray-500 text-lg">Coming Soon...</p>
-
-                ) : isSummaryReady ? (
-                    <>
-                        <h2 className="text-xl font-bold">Summary</h2>
-                        <div className="summary_box">
-                            <p className="font-inter font-medium text-sm text-gray-300 whitespace-pre-wrap">
-                                {summary}
-                            </p>
-                        </div>
-                    </>
-                ) : (
-                    <p className="text-gray-500 text-lg">Coming Soon...</p>
-                )}
-            </div>
-        </section>
-    );
+  return (
+    <div className="fixed inset-0 bg-black/50 z-50 flex justify-center items-center">
+      <div className="bg-white max-w-3xl w-full p-8 rounded-xl relative shadow-lg">
+        <button
+          onClick={onClose}
+          className="absolute top-3 right-4 text-gray-600 hover:text-black text-2xl font-bold"
+        >
+          &times;
+        </button>
+        <h2 className="text-3xl font-semibold mb-6">🧠 Video Summary</h2>
+        <textarea
+          readOnly
+          className="w-full p-4 border border-gray-300 rounded-md mb-6 text-base"
+          rows={12}
+          value={lorem}
+        />
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-4">
+          <button
+            onClick={handleDownload}
+            className="w-full sm:w-1/2 px-6 py-3 rounded-xl bg-black text-white font-semibold hover:bg-gray-800 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-gray-500 focus:ring-offset-2 active:scale-95 active:shadow-sm transition-all duration-300 ease-in-out flex items-center justify-center"
+          >
+            <span className="mr-2">⬇️</span> Download PDF
+          </button>
+          <button
+            className="w-full sm:w-1/2 px-6 py-3 border border-gray-400 rounded-xl hover:bg-gray-100 text-lg flex items-center justify-center"
+            onClick={() => navigator.clipboard.writeText(lorem)}
+          >
+            <span className="mr-2">📋</span> Copy
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default SummarizePage;

@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { getTranscript } from '../services/youtube';
 import { loader } from '../assets';
+import SummarizePage from './SummarizePage';
+import TranscriptPage from './TranscriptPage';
 
 const YouTube = () => {
   const [youtubeUrl, setYoutubeUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
+  const [activePopup, setActivePopup] = useState(null);
 
   const handleButtonClick = async (action) => {
     if (!youtubeUrl) return;
@@ -24,12 +25,14 @@ const YouTube = () => {
       localStorage.setItem('error', err.message || 'Something went wrong.');
     } finally {
       setIsLoading(false);
-      navigate(`/${action}`);
+      setActivePopup(action);
     }
   };
 
+  const closePopup = () => setActivePopup(null);
+
   return (
-    <section className="mt-16 w-full max-w-xl px-4 sm:px-0">
+    <section className="mt-16 w-full max-w-xl px-4 sm:px-0 relative">
       <div className="flex flex-col w-full gap-4">
         <div className="relative flex justify-center items-center">
           <input
@@ -74,6 +77,9 @@ const YouTube = () => {
           <img src={loader} alt="loader" className="w-10 h-10 object-contain animate-spin" />
         </div>
       )}
+
+      {activePopup === 'transcript' && <TranscriptPage onClose={closePopup} />}
+      {activePopup === 'summarize' && <SummarizePage onClose={closePopup} />}
     </section>
   );
 };
